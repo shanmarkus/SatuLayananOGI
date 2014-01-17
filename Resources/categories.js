@@ -73,8 +73,6 @@ tableHeader.add(actIndicator);
 tableHeader.add(arrowImage);
 tableHeader.add(statusLabel);
 
-alert(Ti.Platform.displayCaps.platformHeight);
-
 //create a table view
 var categoriesTable = Titanium.UI.createTableView({
     height: Ti.Platform.displayCaps.platformHeight - 118,
@@ -111,6 +109,47 @@ win.addEventListener('click', function(e) {
 	});
 
 	Titanium.UI.currentTab.open(detailWindow);
+});
+
+//table scrolling function
+categoriesTable.addEventListener('scroll', function(e){
+	if(Ti.Platform.osname != 'iphone'){
+		Titanium.API.info("Ti.Platform.osname != 'iPhone':"+Ti.Platform.osname);
+		return;
+	}
+	
+	var offset = e.contentOffset.y;
+	if(offset < -80.0 && !pulling)
+	{
+		pulling = true;
+		arrowImage.backgroundImage = 'img/refreshArrow_up.png';
+		statusLabel.text = "Release to refresh...";
+	}else{
+		pulling = false;
+		arrowImage.backgroundImage = 'img/refreshArrow.png';
+		statusLabel.text = "Pull to refresh...";
+	}
+});
+categoriesTable.addEventListener('scroll', function(e){
+	if(Ti.Platform.osname != 'iphone'){
+		return;
+	}
+	var offset = e.contentOffset.y;
+	if(pulling && !reloading && e.contentOffset.y <= -80.0)
+	{
+		reloading = true;
+		pulling = false;
+		arrowImage.hide();
+		actIndicator.show();
+		statusLabel.text = "Reloading modules...";
+		categoriesTable.setContentInsets({top:80},{animated:true});
+		
+		//null out the existing module data
+		categoriesTable.data = null;
+		data =[];
+		
+		loadCategories();
+	}
 });
 
 categoriesHTTPClient.onload = function (e) {
@@ -161,6 +200,16 @@ categoriesHTTPClient.onload = function (e) {
 	}
 	// set the data to tableview's data
 	categoriesTable.data = data;
+	
+	if(reloading == true){
+		//when done, reset the header to its original style 
+		categoriesTable.setContentInsets({top:0},{animated:true});
+		reloading = false;
+		statusLabel.text = "Pull to refresh...";
+		actIndicator.hide();
+		arrowImage.backgroundImage = 'img/refreshArrow.png';
+		arrowImage.show();
+	 }
 
 };
 
