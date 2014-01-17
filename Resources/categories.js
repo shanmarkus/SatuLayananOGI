@@ -33,10 +33,8 @@ searchBar.addEventListener('cancel', function(e) {
 
 //create a table view
 var categoriesTable = Titanium.UI.createTableView({
-	height : 366,
-	width : 320,
-	top : 0,
-	left : 0,
+	width: Ti.Platform.displayCaps.platformWidth,
+	height: Ti.Platform.displayCaps.platformHeight,
 	search : searchBar,
 	filterAttribute : 'filter'
 });

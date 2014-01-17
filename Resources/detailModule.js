@@ -39,8 +39,8 @@ var reloading = false;
 
 var tableHeader = Titanium.UI.createView({
 	backgroundImage:'img/header.png',
-	width: 320,
-	height: 120
+	width: Ti.Platform.displayCaps.platformWidth,
+	height: Ti.Platform.displayCaps.platformHeight
 });
 
 var arrowImage = Titanium.UI.createImageView({
