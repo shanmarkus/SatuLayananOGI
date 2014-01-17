@@ -8,13 +8,6 @@ var data = [];
 
 var ContentHTTPClient = Titanium.Network.createHTTPClient();
 
-//create a table view
-var ContentTable = Titanium.UI.createWebView({
-	width : Ti.Platform.displayCaps.platformWidth,
-	height : Ti.Platform.displayCaps.platformHeight,
-});
-
-//methods for detailModule
 
 //getting title
 var namaHalamanTemp = win.getTitle();
@@ -26,16 +19,11 @@ ContentHTTPClient.onload = function() {
 	//create a json object using the JSON.PARSE function
 
 	var jsonObject = JSON.parse(this.responseText);
-	alert(jsonObject.content[0].content);
-
-	// var row = Titanium.UI.createTableView({
-	// text : jsonObject.content[0].content,
-	// _title : win._title,
-	// className : 'content-row',
-	// height : 'auto',
-	// backgroundColor : '#fff'
-	// });
-
+	
+    //generating json content to web view
+    var webview= Ti.UI.createWebView({
+        html: jsonObject.content[0].content
+    });
 	//title label for row at index i
 	var titleLabel = Titanium.UI.createLabel({
 		text : jsonObject.content[0].content,
@@ -50,10 +38,12 @@ ContentHTTPClient.onload = function() {
 		height : Ti.Platform.displayCaps.platformHeight,
 		color : '#232'
 	});
-	ContentTable.add(titleLabel);
+	//add web view to window
+	win.add(webview);
+	
 };
 
-win.add(ContentTable);
+
 
 //this method will fire if there's an error in accessing the //remote data
 ContentHTTPClient.onerror = function() {

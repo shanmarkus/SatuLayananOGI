@@ -43,6 +43,11 @@ var tableHeader = Titanium.UI.createView({
 	height: Ti.Platform.displayCaps.platformHeight
 });
 
+
+
+
+
+
 var arrowImage = Titanium.UI.createImageView({
 	backgroundImage:"img/refreshArrow.png",
 	width:22,
@@ -155,6 +160,7 @@ detailModulesHTTPClient.onload = function() {
 	{
 		var aFeed = jsonObject.page[i];
 		
+
 		//create table row
 		var row = Titanium.UI.createTableViewRow({
 			_title:aFeed.page_name,
