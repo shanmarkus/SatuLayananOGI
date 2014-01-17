@@ -81,6 +81,7 @@ var moduleTable = Titanium.UI.createTableView({
 	left: 	0,
 	search: searchBar,
 	filterAttribute:'filter'
+	
 }); 
 moduleTable.headerPullView = tableHeader;
 win.add(moduleTable);
