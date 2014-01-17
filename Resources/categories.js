@@ -43,7 +43,7 @@ var categoriesTable = Titanium.UI.createTableView({
 
 win.add(categoriesTable);
 //load all categories
-loadCategories();
+
 
 //click button
 win.addEventListener('click', function(e) {
