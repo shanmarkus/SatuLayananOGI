@@ -11,34 +11,81 @@ var data = [];
 
 //define search bar which will attach to  table view
 var searchBar = Titanium.UI.createSearchBar({
-	showCancel : true,
-	height : 43,
-	top : 0
+    showCancel:true,
+    height :43,
+    top:0
 });
 
-searchBar.addEventListener('change', function(e) {
-
-	Ti.API.info('user searching for: ' + e.value);
+//print out the searchbar value whenever it changes 
+searchBar.addEventListener('change' , function(e){
+    
+    Ti.API.info('user searching for: ' + e.value);
 });
 //when the return key is hit, make searchBar get blur
-searchBar.addEventListener('return', function(e) {
-	searchBar.blur();
+searchBar.addEventListener('return' , function(e){
+    searchBar.blur(); 
 });
 
 //when the cancel but ton is tapped,make searchBar get blur too
-searchBar.addEventListener('cancel', function(e) {
-	searchBar.blur();
+searchBar.addEventListener('cancel', function(e){
+    searchBar.blur();
 });
 //end of search bar
 
-//create a table view
-var categoriesTable = Titanium.UI.createTableView({
-	width: Ti.Platform.displayCaps.platformWidth,
-	height: Ti.Platform.displayCaps.platformHeight,
-	search : searchBar,
-	filterAttribute : 'filter'
+//create refresh view and relative variable
+var pulling = false;
+var reloading = false;
+
+var tableHeader = Titanium.UI.createView({
+    backgroundImage:'img/header.png',
+    width: Ti.Platform.displayCaps.platformWidth,
+    height: Ti.Platform.displayCaps.platformHeight,
+    minRowHeight : 50
 });
 
+var arrowImage = Titanium.UI.createImageView({
+    backgroundImage:"img/refreshArrow.png",
+    width:22,
+    height:54,
+    bottom:20,
+    left:20
+});
+
+var statusLabel = Ti.UI.createLabel({ 
+    text:"Pull to refresh...",
+    left:85,
+    width:200,
+    bottom:28,
+    height:"auto",
+    color:"#FFF",
+    textAlign:"center",
+    font :{fontSize:14, fontWeight :"bold"},
+    shadowColor:"#89a",
+    shadowOffset:{x:0,y:1}
+});
+var actIndicator = Titanium.UI.createActivityIndicator({
+    left:20,
+    bottom:20,
+    width: 40,
+    height: 40
+});
+tableHeader.add(actIndicator);
+tableHeader.add(arrowImage);
+tableHeader.add(statusLabel);
+
+alert(Ti.Platform.displayCaps.platformHeight);
+
+//create a table view
+var categoriesTable = Titanium.UI.createTableView({
+    height: Ti.Platform.displayCaps.platformHeight - 118,
+    width:  320,
+    top:    0,
+    left:   0,
+    search: searchBar,
+    filterAttribute:'filter'
+    
+}); 
+categoriesTable.headerPullView = tableHeader;
 win.add(categoriesTable);
 //load all categories
 
