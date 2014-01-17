@@ -9,17 +9,15 @@ var data = [];
 var ContentHTTPClient = Titanium.Network.createHTTPClient();
 
 //create a table view
-var ContentTable = Titanium.UI.createTableView({
-	width: Ti.Platform.displayCaps.platformWidth,
-	height: Ti.Platform.displayCaps.platformHeight
+var ContentTable = Titanium.UI.createWebView({
+	width : Ti.Platform.displayCaps.platformWidth,
+	height : Ti.Platform.displayCaps.platformHeight,
 });
 
 //methods for detailModule
 
 //getting title
 var namaHalamanTemp = win.getTitle();
-
-win.add(ContentTable);
 
 // this method will process the remote data
 
@@ -29,39 +27,33 @@ ContentHTTPClient.onload = function() {
 
 	var jsonObject = JSON.parse(this.responseText);
 	alert(jsonObject.content[0].content);
-	//get through each item
-	//alert(jsonObject.content);
-	var row = Titanium.UI.createTableView({
-		text : jsonObject.content[0].content,
-		_title : win._title,
-		className : 'content-row',
-		height : 'auto',
-		backgroundColor : '#fff'
-	});
-	
+
+	// var row = Titanium.UI.createTableView({
+	// text : jsonObject.content[0].content,
+	// _title : win._title,
+	// className : 'content-row',
+	// height : 'auto',
+	// backgroundColor : '#fff'
+	// });
+
 	//title label for row at index i
 	var titleLabel = Titanium.UI.createLabel({
-		text : jsonObject.content,
+		text : jsonObject.content[0].content,
 		font : {
 			fontSize : 14,
-			fontWeight : ' bold'
+			fontWeight : ' normal'
 		},
-		left : 70,
 		top : 5,
-		height : 100,
-		width : 210,
+		left : 5,
+		right : 5,
+		width : Ti.Platform.displayCaps.platformWidth,
+		height : Ti.Platform.displayCaps.platformHeight,
 		color : '#232'
 	});
-
-	row.add(titleLabel);
-
-
-	//add the row to data array
-	data.push(row);
-	// set the data to tableview's data
-	ContentTable.data = data;
-
+	ContentTable.add(titleLabel);
 };
+
+win.add(ContentTable);
 
 //this method will fire if there's an error in accessing the //remote data
 ContentHTTPClient.onerror = function() {
