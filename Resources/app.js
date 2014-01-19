@@ -22,7 +22,7 @@ var win1 = Titanium.UI.createWindow({
 	height : pHeight,
 	top : 0,
 	left : 0,
-	backgroundImage : 'background.png',
+	//backgroundImage : 'background.png',
 	url : 'tentang.js',
 	title : 'Tentang SatuLayanan',
 	barImage : 'navbar.png',
@@ -45,7 +45,7 @@ var win2 = Titanium.UI.createWindow({
 	height : pHeight,
 	top : 0,
 	left : 0,
-	backgroundImage : 'background.png',
+	//backgroundImage : 'background.png',
 	url : 'modules.js',
 	title : 'Modules',
 	barImage : 'navbar.png'
@@ -64,7 +64,7 @@ var win3 = Titanium.UI.createWindow({
 	height : pHeight,
 	top : 0,
 	left : 0,
-	backgroundImage : 'background.png',
+	//backgroundImage : 'background.png',
 	url : 'categories.js',
 	title : 'Kategori',
 	barImage : 'navbar.png'
@@ -82,6 +82,10 @@ var tab3 = Titanium.UI.createTab({
 //  add tabs
 //
 win3.open;
+//tabGroup.backgroundColor="#4bd762";
+// tabGroup.activeTabBackgroundSelectedColor="#4bd762";
+// tabGroup.activeTabBackgroundColor="#4bd762";
+// tabGroup.active
 tabGroup.addTab(tab3); //Categories.js
 tabGroup.addTab(tab2); //Modules.js
 tabGroup.addTab(tab1); //Tentang.js

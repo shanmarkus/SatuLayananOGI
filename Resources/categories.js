@@ -83,8 +83,10 @@ var categoriesTable = Titanium.UI.createTableView({
     filterAttribute:'filter'
     
 }); 
+
 categoriesTable.headerPullView = tableHeader;
 win.add(categoriesTable);
+
 //load all categories
 
 
@@ -197,6 +199,7 @@ categoriesHTTPClient.onload = function (e) {
 
 
 		row.height = titleLabel.height + 15;
+		row.selectedBackgroundColor="#4bd762";
 		//add the row to data array
 		data.push(row);
 	}

@@ -220,6 +220,7 @@ modulesHTTPClient.onload = function(e) {
 			top: 10 
 		});
 		row.add(iconImage);
+		row.selectedBackgroundColor="#4bd762";
 		
 		//add the row to data array
 		data.push(row);
@@ -238,19 +239,6 @@ modulesHTTPClient.onload = function(e) {
 	 }
 };
 
-moduleTable.addEventListener('click', function(e){
- 
-tableData = moduleTable.data[0].rows;
-         for(i=0;i<tableData.length;i++)
-         {
-                        // this will reset color of all the rows
-            tableData[i].backgroundColor = "white";
-         }
-         rowData = e.rowData;
-                 // this will set selected row color to red
-         rowData.backgroundColor = '#4bd762';
- 
-});
 
 //this method will fire if there's an error in accessing the //remote data
 modulesHTTPClient.onerror = function() {
