@@ -22,7 +22,7 @@ ContentHTTPClient.onload = function() {
 	
     //generating json content to web view
     var webview= Ti.UI.createWebView({
-        html: jsonObject.content[0].content
+        html: "<style>body{font-family:'HelveticaNeue-Light';font-size:16px}img{max-width:300px;} .content{padding:5px}</style><div class='content'>"+jsonObject.content[0].content+"</div>"
     });
 	//title label for row at index i
 	var titleLabel = Titanium.UI.createLabel({

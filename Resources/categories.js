@@ -73,7 +73,7 @@ tableHeader.add(actIndicator);
 tableHeader.add(arrowImage);
 tableHeader.add(statusLabel);
 
-alert(Ti.Platform.displayCaps.platformHeight);
+//alert(Ti.Platform.displayCaps.platformHeight);
 
 //create a table view
 var categoriesTable = Titanium.UI.createTableView({
@@ -121,7 +121,9 @@ categoriesHTTPClient.onload = function (e) {
 	var length = jsonObject.category.length;
 	if(length == null){
 		loadCategories();
+		
 	}
+	
 	//get through each item
 	for (var i = 0; i < jsonObject.category.length; i++) {
 		var aFeed = jsonObject.category[i];
@@ -176,7 +178,8 @@ loadCategories();
 
 function loadCategories() {
 	//open the recipes xml feed
-	categoriesHTTPClient.open('GET', 'http://satulayanan.net/api/index?tag=get_category&id=0');
+	var bool = categoriesHTTPClient.open('GET', 'http://satulayanan.net/api/index?tag=get_category&id=0');
 	//execute the call to the remote feed
 	categoriesHTTPClient.send();
+
 }

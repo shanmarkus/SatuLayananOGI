@@ -124,6 +124,7 @@ moduleTable.addEventListener('scroll', function(e){
 		data =[];
 		
 		loadModules();
+	
 	}
 });
 //tablerow selected function: create new window
@@ -172,7 +173,7 @@ modulesHTTPClient.onload = function(e) {
 			font : {fontSize: 14, fontWeight : ' bold' },
 			left: 70,
 			top: 5,
-			height: 20,
+			height: 10,
 			width: 210,
 			color:'#232'
 		});
@@ -180,21 +181,27 @@ modulesHTTPClient.onload = function(e) {
 		row.add(titleLabel);
 		
 		//description view for row at index i
+		
 		var descriptionLabel = Titanium.UI.createLabel({
+		          
+		          
+		        //text: afeed.username;
 				font : {fontSize: 10, fontWeight : ' normal ' },
 				left: 	70,
-				top: 	titleLabel.height+5,
+				top: 	titleLabel.height,
 				width: 	200,
 				color:	'#9a9'
 		});
 		
-		if(aFeed.module_name.length == 0) {
+		
+		if( aFeed.username == null || aFeed.username == '' || aFeed.username.length == 0) {
 			
-			row._description = 'No description is available.';
-			descriptionLabel.height = 20;
+			row._description = '';
+			descriptionLabel.height = 48;
 				
 		}else{
-			descriptionLabel.height = 45;
+		    row._description = "Oleh: " + aFeed.username;
+			descriptionLabel.height = 48;
 					
 		}
 		
@@ -213,6 +220,7 @@ modulesHTTPClient.onload = function(e) {
 			top: 10 
 		});
 		row.add(iconImage);
+		
 		//add the row to data array
 		data.push(row);
 	}
@@ -230,6 +238,19 @@ modulesHTTPClient.onload = function(e) {
 	 }
 };
 
+moduleTable.addEventListener('click', function(e){
+ 
+tableData = moduleTable.data[0].rows;
+         for(i=0;i<tableData.length;i++)
+         {
+                        // this will reset color of all the rows
+            tableData[i].backgroundColor = "white";
+         }
+         rowData = e.rowData;
+                 // this will set selected row color to red
+         rowData.backgroundColor = '#4bd762';
+ 
+});
 
 //this method will fire if there's an error in accessing the //remote data
 modulesHTTPClient.onerror = function() {
@@ -244,15 +265,17 @@ loadModules();
 // function
 function loadModules(){	
 	//open the modules xml feed
+	
 	var module_id = win._id;
 	if(module_id == null){
-	modulesHTTPClient.open('GET' , 'http://satulayanan.net/api/index?tag=get_module&id=0');
+	bool = modulesHTTPClient.open('GET' , 'http://satulayanan.net/api/index?tag=get_module&id=0');
 	} else{
 		var httpTemp = 'http://satulayanan.net/api/index?tag=get_module&id=';
 		modulesHTTPClient.open('GET' , httpTemp.concat(module_id));
 	}
 	//execute the call to the remote feed 
 	modulesHTTPClient.send();
+
 }
 
 

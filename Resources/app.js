@@ -24,7 +24,7 @@ var win1 = Titanium.UI.createWindow({
 	left : 0,
 	backgroundImage : 'background.png',
 	url : 'tentang.js',
-	title : 'Tentang',
+	title : 'Tentang SatuLayanan',
 	barImage : 'navbar.png',
 	
 	exitOnClose : true
