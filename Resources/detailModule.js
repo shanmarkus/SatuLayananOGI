@@ -133,6 +133,7 @@ detailModuleTable.addEventListener('scroll', function(e){
 //tablerow selected function: create new window
 detailModuleTable.addEventListener('click', function(e){
 	
+	
 	//get the selected row index
 	var selectedRow = e.rowData;
 	
@@ -144,7 +145,7 @@ detailModuleTable.addEventListener('click', function(e){
 		url: 'page.js',
 		title:selectedRow._title,
 		id:0
-	});
+});
 	
 	Titanium.UI.currentTab.open(detailWindow);
 });
