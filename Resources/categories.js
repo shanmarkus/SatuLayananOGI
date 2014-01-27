@@ -11,24 +11,24 @@ var data = [];
 
 //define search bar which will attach to  table view
 var searchBar = Titanium.UI.createSearchBar({
-    showCancel:true,
-    height :43,
-    top:0
+	showCancel : true,
+	height : 43,
+	top : 0
 });
 
-//print out the searchbar value whenever it changes 
-searchBar.addEventListener('change' , function(e){
-    
-    Ti.API.info('user searching for: ' + e.value);
+//print out the searchbar value whenever it changes
+searchBar.addEventListener('change', function(e) {
+
+	Ti.API.info('user searching for: ' + e.value);
 });
 //when the return key is hit, make searchBar get blur
-searchBar.addEventListener('return' , function(e){
-    searchBar.blur(); 
+searchBar.addEventListener('return', function(e) {
+	searchBar.blur();
 });
 
 //when the cancel but ton is tapped,make searchBar get blur too
-searchBar.addEventListener('cancel', function(e){
-    searchBar.blur();
+searchBar.addEventListener('cancel', function(e) {
+	searchBar.blur();
 });
 //end of search bar
 
@@ -37,37 +37,43 @@ var pulling = false;
 var reloading = false;
 
 var tableHeader = Titanium.UI.createView({
-    backgroundImage:'img/header.png',
-    width: Ti.Platform.displayCaps.platformWidth,
-    height: Ti.Platform.displayCaps.platformHeight,
-    minRowHeight : 50
+	backgroundImage : 'img/header.png',
+	width : Ti.Platform.displayCaps.platformWidth,
+	height : Ti.Platform.displayCaps.platformHeight,
+	minRowHeight : 50
 });
 
 var arrowImage = Titanium.UI.createImageView({
-    backgroundImage:"img/refreshArrow.png",
-    width:22,
-    height:54,
-    bottom:20,
-    left:20
+	backgroundImage : "img/refreshArrow.png",
+	width : 22,
+	height : 54,
+	bottom : 20,
+	left : 20
 });
 
-var statusLabel = Ti.UI.createLabel({ 
-    text:"Pull to refresh...",
-    left:85,
-    width:200,
-    bottom:28,
-    height:"auto",
-    color:"#FFF",
-    textAlign:"center",
-    font :{fontSize:14, fontWeight :"bold"},
-    shadowColor:"#89a",
-    shadowOffset:{x:0,y:1}
+var statusLabel = Ti.UI.createLabel({
+	text : "Pull to refresh...",
+	left : 85,
+	width : 200,
+	bottom : 28,
+	height : "auto",
+	color : "#FFF",
+	textAlign : "center",
+	font : {
+		fontSize : 14,
+		fontWeight : "bold"
+	},
+	shadowColor : "#89a",
+	shadowOffset : {
+		x : 0,
+		y : 1
+	}
 });
 var actIndicator = Titanium.UI.createActivityIndicator({
-    left:20,
-    bottom:20,
-    width: 40,
-    height: 40
+	left : 20,
+	bottom : 20,
+	width : 40,
+	height : 40
 });
 tableHeader.add(actIndicator);
 tableHeader.add(arrowImage);
@@ -75,20 +81,19 @@ tableHeader.add(statusLabel);
 
 //create a table view
 var categoriesTable = Titanium.UI.createTableView({
-    height: Ti.Platform.displayCaps.platformHeight - 118,
-    width:  320,
-    top:    0,
-    left:   0,
-    search: searchBar,
-    filterAttribute:'filter'
-    
-}); 
+	height : Ti.Platform.displayCaps.platformHeight - 118,
+	width : 320,
+	top : 0,
+	left : 0,
+	search : searchBar,
+	filterAttribute : 'filter'
+
+});
 
 categoriesTable.headerPullView = tableHeader;
 win.add(categoriesTable);
 
 //load all categories
-
 
 //click button
 win.addEventListener('click', function(e) {
@@ -114,57 +119,59 @@ win.addEventListener('click', function(e) {
 });
 
 //table scrolling function
-categoriesTable.addEventListener('scroll', function(e){
-	if(Ti.Platform.osname != 'iphone'){
-		Titanium.API.info("Ti.Platform.osname != 'iPhone':"+Ti.Platform.osname);
+categoriesTable.addEventListener('scroll', function(e) {
+	if (Ti.Platform.osname != 'iphone') {
+		Titanium.API.info("Ti.Platform.osname != 'iPhone':" + Ti.Platform.osname);
 		return;
 	}
-	
+
 	var offset = e.contentOffset.y;
-	if(offset < -80.0 && !pulling)
-	{
+	if (offset < -80.0 && !pulling) {
 		pulling = true;
 		arrowImage.backgroundImage = 'img/refreshArrow_up.png';
 		statusLabel.text = "Release to refresh...";
-	}else{
+	} else {
 		pulling = false;
 		arrowImage.backgroundImage = 'img/refreshArrow.png';
 		statusLabel.text = "Pull to refresh...";
 	}
 });
-categoriesTable.addEventListener('scroll', function(e){
-	if(Ti.Platform.osname != 'iphone'){
+categoriesTable.addEventListener('scroll', function(e) {
+	if (Ti.Platform.osname != 'iphone') {
 		return;
 	}
 	var offset = e.contentOffset.y;
-	if(pulling && !reloading && e.contentOffset.y <= -80.0)
-	{
+	if (pulling && !reloading && e.contentOffset.y <= -80.0) {
 		reloading = true;
 		pulling = false;
 		arrowImage.hide();
 		actIndicator.show();
 		statusLabel.text = "Reloading modules...";
-		categoriesTable.setContentInsets({top:80},{animated:true});
-		
+		categoriesTable.setContentInsets({
+			top : 80
+		}, {
+			animated : true
+		});
+
 		//null out the existing module data
 		categoriesTable.data = null;
-		data =[];
-		
+		data = [];
+
 		loadCategories();
 	}
 });
 
-categoriesHTTPClient.onload = function (e) {
+categoriesHTTPClient.onload = function(e) {
 
 	//create a json object using the JSON.PARSE function
 
 	var jsonObject = JSON.parse(this.responseText);
 	var length = jsonObject.category.length;
-	if(length == null){
+	if (length == null) {
 		loadCategories();
-		
+
 	}
-	
+
 	//get through each item
 	for (var i = 0; i < jsonObject.category.length; i++) {
 		var aFeed = jsonObject.category[i];
@@ -179,7 +186,7 @@ categoriesHTTPClient.onload = function (e) {
 			height : 'auto',
 			backgroundColor : '#fff'
 		});
-		
+
 		Ti.API.info(row._title);
 		//title label for row at index i
 		var titleLabel = Titanium.UI.createLabel({
@@ -197,24 +204,27 @@ categoriesHTTPClient.onload = function (e) {
 
 		row.add(titleLabel);
 
-
 		row.height = titleLabel.height + 15;
-		//row.selectedBackgroundColor="#4bd762";
+		row.selectedBackgroundColor = "#4bd762";
 		//add the row to data array
 		data.push(row);
 	}
 	// set the data to tableview's data
 	categoriesTable.data = data;
-	
-	if(reloading == true){
-		//when done, reset the header to its original style 
-		categoriesTable.setContentInsets({top:0},{animated:true});
+
+	if (reloading == true) {
+		//when done, reset the header to its original style
+		categoriesTable.setContentInsets({
+			top : 0
+		}, {
+			animated : true
+		});
 		reloading = false;
 		statusLabel.text = "Pull to refresh...";
 		actIndicator.hide();
 		arrowImage.backgroundImage = 'img/refreshArrow.png';
 		arrowImage.show();
-	 }
+	}
 
 };
 
