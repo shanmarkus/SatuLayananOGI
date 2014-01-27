@@ -137,12 +137,12 @@ moduleTable.addEventListener('click', function(e){
 	var detailWindow = Titanium.UI.createWindow({
 		_title:selectedRow._title, 
 		_id:selectedRow._id,
+		_moduleSlug:selectedRow.moduleSlug,
 		backgroundColor:'#fff',
 		url: 'detailModule.js',
 		title:selectedRow._title,
 		id:0
 	});
-	
 	Titanium.UI.currentTab.open(detailWindow);
 });
 // this method will process the remote data 
@@ -161,6 +161,7 @@ modulesHTTPClient.onload = function(e) {
 		var row = Titanium.UI.createTableViewRow({
 			_title:aFeed.module_name,
 			_id:aFeed.id_module,
+			moduleSlug:aFeed.module_slug,
 			hasChild: true,
 			className: 'module-row',
 			filter: aFeed.module_name,
@@ -183,8 +184,6 @@ modulesHTTPClient.onload = function(e) {
 		//description view for row at index i
 		
 		var descriptionLabel = Titanium.UI.createLabel({
-		          
-		          
 		        //text: afeed.username;
 				font : {fontSize: 10, fontWeight : ' normal ' },
 				left: 	70,

@@ -3,9 +3,11 @@
  */
 
 var win = Titanium.UI.currentWindow; 
+var moduleSlug = win._moduleSlug;
 
 //the data storage empty array
 var data = []; 
+
 
 //declare the ht tp cl ient object
 var detailModulesHTTPClient = Titanium.Network.createHTTPClient();
@@ -42,11 +44,6 @@ var tableHeader = Titanium.UI.createView({
 	width: Ti.Platform.displayCaps.platformWidth,
 	height: Ti.Platform.displayCaps.platformHeight
 });
-
-
-
-
-
 
 var arrowImage = Titanium.UI.createImageView({
 	backgroundImage:"img/refreshArrow.png",
@@ -140,12 +137,13 @@ detailModuleTable.addEventListener('click', function(e){
 	var detailWindow = Titanium.UI.createWindow({
 		_title:selectedRow._title, 
 		_idPage:selectedRow._idPage,
+		pageSlug:selectedRow._pageSlug,
+		moduleSlug:moduleSlug,
 		backgroundColor:'#fff',
 		url: 'page.js',
 		title:selectedRow._title,
 		id:0
 	});
-	
 	Titanium.UI.currentTab.open(detailWindow);
 });
 // this method will process the remote data 
@@ -165,6 +163,8 @@ detailModulesHTTPClient.onload = function() {
 		var row = Titanium.UI.createTableViewRow({
 			_title:aFeed.page_name,
 			_idPage:aFeed.id_page,
+			_pageSlug:aFeed.slug,
+			moduleSlug: moduleSlug,
 			hasChild: true,
 			className: 'detailModule-row',
 			filter: aFeed.page_name,
