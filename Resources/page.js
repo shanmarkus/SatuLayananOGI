@@ -21,20 +21,6 @@ ContentHTTPClient.onload = function() {
 
 	var jsonObject = JSON.parse(this.responseText);
 
-	//generating json content to web view
-	var webview = Ti.UI.createWebView({
-		html : "<style>body{font-family:'HelveticaNeue-Light';font-size:16px}img{max-width:300px;} .content{padding:5px}</style><div class='content'>" + jsonObject.content[0].content + "</div> "
-	});
-
-	var disqusView = Ti.UI.createWebView({
-	url: "http://satulayanan.net/comment/index/"+moduleSlug+"/"+pageSlug+"",
-	
-<<<<<<< HEAD
-	});
-
-
-
-=======
     //generating json content to web view
     var webview= Ti.UI.createWebView({
         html: "<style>body{font-family:'HelveticaNeue-Light';font-size:16px}"+
@@ -44,7 +30,12 @@ ContentHTTPClient.onload = function() {
         "th {background: lightblue;border-color: white;}"+
         "body {padding: 1rem;}</style><div class='content'>"+jsonObject.content[0].content+"</div>"
     });
->>>>>>> f27a606cd93dac23a1a24050fc582e8fbdf64999
+
+	var disqusView = Ti.UI.createWebView({
+	url: "http://satulayanan.net/comment/index/"+moduleSlug+"/"+pageSlug+"",
+	
+	});
+
 	//title label for row at index i
 	var titleLabel = Titanium.UI.createLabel({
 		text : jsonObject.content[0].content,
