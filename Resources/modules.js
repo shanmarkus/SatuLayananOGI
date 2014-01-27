@@ -219,7 +219,7 @@ modulesHTTPClient.onload = function(e) {
 			top: 10 
 		});
 		row.add(iconImage);
-		row.selectedBackgroundColor="#4bd762";
+		//row.selectedBackgroundColor="#4bd762";
 		
 		//add the row to data array
 		data.push(row);

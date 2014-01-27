@@ -199,7 +199,7 @@ categoriesHTTPClient.onload = function (e) {
 
 
 		row.height = titleLabel.height + 15;
-		row.selectedBackgroundColor="#4bd762";
+		//row.selectedBackgroundColor="#4bd762";
 		//add the row to data array
 		data.push(row);
 	}
