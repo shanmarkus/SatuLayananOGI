@@ -161,16 +161,18 @@ categoriesTable.addEventListener('scroll', function(e) {
 	}
 });
 
+if(Titanium.Network.networkType == Titanium.Network.NETWORK_NONE){ 
+    alert("you need internet connection");
+        
+    
+    }
+
 categoriesHTTPClient.onload = function(e) {
 
 	//create a json object using the JSON.PARSE function
 
 	var jsonObject = JSON.parse(this.responseText);
 	var length = jsonObject.category.length;
-	if (length == null) {
-		loadCategories();
-
-	}
 
 	//get through each item
 	for (var i = 0; i < jsonObject.category.length; i++) {

@@ -57,7 +57,7 @@ ContentHTTPClient.onload = function() {
     var webview = Ti.UI.createWebView({
         html : "<head><meta name=\"viewport\" content=\"width=device-width, user-scalable=no\"></head><style>body{font-family:'HelveticaNeue-Light';font-size:15px}" + "img{max-width:300px;} " + ".content{padding:5px}" + "td, th{ width: 4rem;height: 2rem;border: 1px solid #ccc;text-align: center;}" + "th {background: lightblue;border-color: white;}" + "body {padding: 1rem;}</style><div class='content'>" + jsonObject.content[0].content + discusPage + footer + "</div>",
         top : 5,
-        height : 400,
+        height : 480,
 
     });
 
