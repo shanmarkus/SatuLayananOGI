@@ -5,6 +5,7 @@
 var win = Titanium.UI.currentWindow;
 //create empty day
 //declare the ht tp cl ient object
+var isLoad=false;
 var categoriesHTTPClient = Titanium.Network.createHTTPClient({
     onload : function(e) {
 
@@ -66,6 +67,7 @@ var categoriesHTTPClient = Titanium.Network.createHTTPClient({
             arrowImage.backgroundImage = 'img/refreshArrow.png';
             arrowImage.show();
         }
+        isLoad=true;
 
     },
 
@@ -84,6 +86,7 @@ var categoriesHTTPClient = Titanium.Network.createHTTPClient({
         });
         Ti.API.debug(e.error);
         alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+        if(!isLoad)isLoad=false;
         //Ti.API.error(this.status + ' - ' + this.statusText);
     },
     timeout : 3000
@@ -236,7 +239,7 @@ categoriesTable.addEventListener('dragEnd', function(e) {
         });
 
         //null out the existing module data
-        categoriesTable.data = null;
+         if(!isLoad)categoriesTable.data = null;
         data = [];
 
         loadCategories();

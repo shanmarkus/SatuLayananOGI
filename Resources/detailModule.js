@@ -7,7 +7,7 @@ var moduleSlug = win._moduleSlug;
 
 //the data storage empty array
 var data = [];
-
+var isLoad = false;
 //declare the ht tp cl ient object
 var detailModulesHTTPClient = Titanium.Network.createHTTPClient({
     onload : function() {
@@ -15,7 +15,7 @@ var detailModulesHTTPClient = Titanium.Network.createHTTPClient({
         //create a json object using the JSON.PARSE function
 
         var jsonObject = JSON.parse(this.responseText);
-        if(jsonObject==null || jsonObject=='undefined' || jsonObject== ''){
+        if (jsonObject == null || jsonObject == 'undefined' || jsonObject == '') {
             alert("Failed to retrieve data.\n Please try again and make sure you have internet connection.");
         }
         //get through each item
@@ -86,11 +86,22 @@ var detailModulesHTTPClient = Titanium.Network.createHTTPClient({
             arrowImage.backgroundImage = 'img/refreshArrow.png';
             arrowImage.show();
         }
+        isLoad = true;
     },
     onerror : function(e) {
-        // log the error to our Ti tanium Studio console
-      
-        Ti.API.error(this.status + ' - ' + this.statusText);
+        reloading = false;
+        pulling = false;
+        arrowImage.hide();
+        actIndicator.hide();
+        statusLabel.text = "";
+        detailModuleTable.setContentInsets({
+            top : 0
+        }, {
+            animated : true
+        });
+       // Ti.API.debug(e.error);
+        alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+        if (!isLoad)isLoad = false;
     },
     timeout : 5000
 
@@ -106,7 +117,7 @@ var searchBar = Titanium.UI.createSearchBar({
 //print out the searchbar value whenever it changes
 searchBar.addEventListener('change', function(e) {
 
-    Ti.API.info('user searching for: ' + e.value);
+   // Ti.API.info('user searching for: ' + e.value);
 });
 //when the return key is hit, make searchBar get blur
 searchBar.addEventListener('return', function(e) {
@@ -177,6 +188,7 @@ var detailModuleTable = Titanium.UI.createTableView({
 detailModuleTable.headerPullView = tableHeader;
 win.add(detailModuleTable);
 
+var offset=0;
 //table scrolling function
 detailModuleTable.addEventListener('scroll', function(e) {
     if (Ti.Platform.osname != 'iphone') {
@@ -184,36 +196,36 @@ detailModuleTable.addEventListener('scroll', function(e) {
         return;
     }
 
-    var offset = e.contentOffset.y;
+    offset = e.contentOffset.y;
     if (offset < -65.0 && !pulling) {
         pulling = true;
         arrowImage.backgroundImage = 'img/refreshArrow_up.png';
         statusLabel.text = "Release to refresh...";
-    } else if(pulling&&offset>-65.0&&offset<0){
+    } else if (pulling && offset > -65.0 && offset < 0) {
         pulling = false;
         arrowImage.backgroundImage = 'img/refreshArrow.png';
-        statusLabel.text = "Pull to refresh...";
+        statusLabel.text = "Pull Down to refresh...";
     }
 });
-detailModuleTable.addEventListener('scrollEnd', function(e) {
+detailModuleTable.addEventListener('dragEnd', function(e) {
     if (Ti.Platform.osname != 'iphone') {
         return;
     }
-    var offset = e.contentOffset.y;
-    if (pulling && !reloading && e.contentOffset.y <= -65.0) {
+    // offset = e.contentOffset.y;
+    if (pulling && !reloading && offset <= -65.0) {
         reloading = true;
         pulling = false;
         arrowImage.hide();
         actIndicator.show();
-        statusLabel.text = "Reloading detailModules...";
+        statusLabel.text = "Reloading ...";
         detailModuleTable.setContentInsets({
             top : 65
         }, {
             animated : true
         });
 
-        //null out the existing detailModule data
-        detailModuleTable.data = null;
+        //null out the existing module data
+         if(!isLoad)detailModuleTable.data = null;
         data = [];
 
         loaddetailModules();

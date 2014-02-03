@@ -3,10 +3,10 @@
     <id>com.OGI.SatuLayanan</id>
     <name>SatuLayananOGI</name>
     <version>1.0</version>
-    <publisher>Shan</publisher>
-    <url>http://</url>
-    <description>not specified</description>
-    <copyright>2014 by Shan</copyright>
+    <publisher>Open Goverment Indonesia</publisher>
+    <url>http://opengovindonesia.org/</url>
+    <description>SatuLayanan dirancang dan dibangun untuk memberi kemudahan kepada masyarakat dalam mepperoleh informasi mengenai layanan-layanan yang diberikan badan publik atau pemerintah.</description>
+    <copyright>2014 by Open Goverment Indonesia</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>

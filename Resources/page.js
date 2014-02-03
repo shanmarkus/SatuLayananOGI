@@ -9,7 +9,12 @@ var DiscusHTTPClient = Titanium.Network.createHTTPClient({
     onload : function() {
         discusPage = this.responseText;
     },
-    timeout:5000
+    onerror : function() {
+        //Ti.API.debug(e.error);
+        alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+        //Ti.API.error(this.status + ' - ' + this.statusText);
+    },
+    timeout : 3000
 });
 
 var ContentHTTPClient = Titanium.Network.createHTTPClient({
@@ -29,11 +34,6 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 
         var jsonObject = JSON.parse(this.responseText);
 
-        // var disqusView = Ti.UI.createWebView({
-        // url : "http://satulayanan.net/comment/index/" + moduleSlug + "/" + pageSlug + "",
-        // scalesPageToFit : true,
-        // top : 280,
-        // });
         var footer = "<style>.footer{font-size:12px;}</style>" + "<div class='footer'><hr>" + "Jika terdapat masukan atau saran terhadap informasi di Modul Layanan ini silahkan kirimkan email kepada pengelola masing-masing Modul Layanan. " + "Apabila pada Modul Layanan tersebut belum ada pengelolanya, maka Modul Layanan tersebut belum ada pengelolanya, maka masukan atau saran dapat di sampaikan melalui " + "network@opengovindonesia.org " + "atau mention lewat akun twitter " + "@OpenGovIndo " + "<div class='lapor'>Jika terdapat permasalahan dalam layanan publik ini, silahkan melaporkan ke <a><img src='http://satulayanan.net/img/lapor.png'></a><hr></div>" + "</div>";
 
         if (discusPage == 'undefined' || discusPage == "" || discusPage == null)
@@ -66,9 +66,11 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
     },
     onerror : function(e) {
         // log the error to our Ti tanium Studio console
-        Ti.API.error(this.status + ' - ' + this.statusText);
+        //Ti.API.debug(e.error);
+        alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+        //Ti.API.error(this.status + ' - ' + this.statusText);
     },
-    timeout:5000
+    timeout : 3000
 });
 var moduleSlug = win.moduleSlug;
 var pageSlug = win.pageSlug;

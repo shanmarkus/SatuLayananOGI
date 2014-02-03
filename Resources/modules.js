@@ -6,16 +6,16 @@ var win = Titanium.UI.currentWindow;
 
 //the data storage empty array
 var data = [];
-
+//isLoad is a status whether the json has been loaded or not
+var isLoad = false;
 //declare the ht tp cl ient object
-var modulesHTTPClient = Titanium.Network.createHTTPClient( { 
-        onload: function(e) {
+var modulesHTTPClient = Titanium.Network.createHTTPClient({
+    onload : function(e) {
 
         //create a json object using the JSON.PARSE function
 
         var jsonObject = JSON.parse(this.responseText);
         var testing = jsonObject.module.length;
-      
 
         //get through each item
         for (var i = 0; i < jsonObject.module.length; i++) {
@@ -110,12 +110,26 @@ var modulesHTTPClient = Titanium.Network.createHTTPClient( {
             arrowImage.backgroundImage = 'img/refreshArrow.png';
             arrowImage.show();
         }
+        isLoad=true;
     },
-    onerror:function(e){
+    onerror : function(e) {
+        // log the error to our Ti tanium Studio console
+        reloading = false;
+        pulling = false;
+        arrowImage.hide();
+        actIndicator.hide();
+        statusLabel.text = "";
+        moduleTable.setContentInsets({
+            top : 0
+        }, {
+            animated : true
+        });
         Ti.API.debug(e.error);
-        alert('error');
+        alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+        if(!isLoad)isLoad=false;
+        //Ti.API.error(this.status + ' - ' + this.statusText);
     },
-    timeout:5000
+    timeout : 3000
 });
 
 //define search bar which will attach to  table view
@@ -199,7 +213,7 @@ var moduleTable = Titanium.UI.createTableView({
 });
 moduleTable.headerPullView = tableHeader;
 win.add(moduleTable);
-
+var offset=0;
 //table scrolling function
 moduleTable.addEventListener('scroll', function(e) {
     if (Ti.Platform.osname != 'iphone') {
@@ -207,40 +221,37 @@ moduleTable.addEventListener('scroll', function(e) {
         return;
     }
 
-    var offset = e.contentOffset.y;
-    if (offset < -40.0 && !pulling) {
+    offset = e.contentOffset.y;
+    if (offset < -65.0 && !pulling) {
         pulling = true;
         arrowImage.backgroundImage = 'img/refreshArrow_up.png';
         statusLabel.text = "Release to refresh...";
-    } else if(pulling&&offset>-40.0&&offset<0){
+    } else if (pulling && offset > -65.0 && offset < 0) {
         pulling = false;
         arrowImage.backgroundImage = 'img/refreshArrow.png';
         statusLabel.text = "Pull Down to refresh...";
     }
-
-
-
-    
 });
-moduleTable.addEventListener('scrollEnd', function(e) {
+
+moduleTable.addEventListener('dragEnd', function(e) {
     if (Ti.Platform.osname != 'iphone') {
         return;
     }
-    var offset = e.contentOffset.y;
-    if (pulling && !reloading && e.contentOffset.y <= -40.0) {
+    // offset = e.contentOffset.y;
+    if (pulling && !reloading && offset <= -65.0) {
         reloading = true;
         pulling = false;
         arrowImage.hide();
         actIndicator.show();
         statusLabel.text = "Reloading modules...";
         moduleTable.setContentInsets({
-            top : 35
+            top : 65
         }, {
             animated : true
         });
 
         //null out the existing module data
-        moduleTable.data = null;
+        if(!isLoad)moduleTable.data = null;
         data = [];
 
         loadModules();
@@ -267,14 +278,9 @@ moduleTable.addEventListener('click', function(e) {
 });
 // this method will process the remote data
 
-
 //modulesHTTPClient.onload =
 
 //this method will fire if there's an error in accessing the //remote data
-modulesHTTPClient.onerror = function() {
-    // log the error to our Ti tanium Studio console
-    Ti.API.error(this.status + ' - ' + this.statusText);
-};
 
 loadModules();
 
@@ -291,7 +297,7 @@ function loadModules() {
     }
 
     //execute the call to the remote feed
-    
+
     modulesHTTPClient.send();
 
 }

@@ -1,9 +1,9 @@
-#appname: SatuLayananOGI
-#appid: com.OGI.SatuLayanan
-#type: mobile
-#guid: e67c5037-f527-4366-928a-78a442091b3a
-#version: 1.0
-#publisher: not specified
-#url: not specified
-#image: appicon.png
-#desc: not specified
+#appname:SatuLayananOGI
+#appid:com.OGI.SatuLayanan
+#type:mobile
+#guid:e67c5037-f527-4366-928a-78a442091b3a
+#version:1.0
+#publisher:Open Goverment Indonesia
+#url:http://opengovindonesia.org/
+#image:appicon.png
+#desc:SatuLayanan dirancang dan dibangun untuk memberi kemudahan kepada masyarakat dalam mepperoleh informasi mengenai layanan-layanan yang diberikan badan publik atau pemerintah.
