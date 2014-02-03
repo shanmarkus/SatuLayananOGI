@@ -8,7 +8,8 @@ var data = [];
 var DiscusHTTPClient = Titanium.Network.createHTTPClient({
     onload : function() {
         discusPage = this.responseText;
-    }
+    },
+    timeout:5000
 });
 
 var ContentHTTPClient = Titanium.Network.createHTTPClient({

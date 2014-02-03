@@ -72,9 +72,21 @@ var categoriesHTTPClient = Titanium.Network.createHTTPClient({
     //this method will fire if there's an error in accessing the //remote data
     onerror : function(e) {
         // log the error to our Ti tanium Studio console
-        Ti.API.error(this.status + ' - ' + this.statusText);
+        reloading = false;
+        pulling = false;
+        arrowImage.hide();
+        actIndicator.hide();
+        statusLabel.text = "";
+        categoriesTable.setContentInsets({
+            top : 0
+        }, {
+            animated : true
+        });
+        Ti.API.debug(e.error);
+        alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+        //Ti.API.error(this.status + ' - ' + this.statusText);
     },
-    timeout : 5000
+    timeout : 3000
 });
 
 var data = [];
@@ -187,7 +199,7 @@ win.addEventListener('click', function(e) {
 
     Titanium.UI.currentTab.open(detailWindow);
 });
-
+var offset = 0;
 //table scrolling function
 categoriesTable.addEventListener('scroll', function(e) {
     if (Ti.Platform.osname != 'iphone') {
@@ -195,30 +207,30 @@ categoriesTable.addEventListener('scroll', function(e) {
         return;
     }
 
-    var offset = e.contentOffset.y;
-    if (offset < -80.0 && !pulling) {
+    offset = e.contentOffset.y;
+    if (offset < -65.0 && !pulling) {
         pulling = true;
         arrowImage.backgroundImage = 'img/refreshArrow_up.png';
         statusLabel.text = "Release to refresh...";
-    } else {
+    } else if (pulling && offset > -65.0 && offset < 0) {
         pulling = false;
         arrowImage.backgroundImage = 'img/refreshArrow.png';
-        statusLabel.text = "Pull to refresh...";
+        statusLabel.text = "Pull Down to refresh...";
     }
 });
-categoriesTable.addEventListener('scroll', function(e) {
+categoriesTable.addEventListener('dragEnd', function(e) {
     if (Ti.Platform.osname != 'iphone') {
         return;
     }
-    var offset = e.contentOffset.y;
-    if (pulling && !reloading && e.contentOffset.y <= -80.0) {
+    // offset = e.contentOffset.y;
+    if (pulling && !reloading && offset <= -65.0) {
         reloading = true;
         pulling = false;
         arrowImage.hide();
         actIndicator.show();
         statusLabel.text = "Reloading modules...";
         categoriesTable.setContentInsets({
-            top : 80
+            top : 65
         }, {
             animated : true
         });
@@ -231,10 +243,10 @@ categoriesTable.addEventListener('scroll', function(e) {
     }
 });
 
-if (Titanium.Network.networkType == Titanium.Network.NETWORK_NONE) {
-    alert("you need internet connection");
-
-}
+// if (Titanium.Network.networkType == Titanium.Network.NETWORK_NONE) {
+// alert("you need internet connection");
+//
+// }
 
 loadCategories();
 
