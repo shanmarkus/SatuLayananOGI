@@ -15,10 +15,7 @@ var modulesHTTPClient = Titanium.Network.createHTTPClient( {
 
         var jsonObject = JSON.parse(this.responseText);
         var testing = jsonObject.module.length;
-        alert(testing);
-        if(jsonObject.module.length == undefined){
-            alert("you need internet connection");
-        }
+      
 
         //get through each item
         for (var i = 0; i < jsonObject.module.length; i++) {
