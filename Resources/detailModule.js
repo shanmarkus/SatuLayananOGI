@@ -4,6 +4,7 @@
 
 var win = Titanium.UI.currentWindow;
 var moduleSlug = win._moduleSlug;
+var username = win._username;
 
 //the data storage empty array
 var data = [];
@@ -243,6 +244,7 @@ detailModuleTable.addEventListener('click', function(e) {
         _idPage : selectedRow._idPage,
         pageSlug : selectedRow._pageSlug,
         moduleSlug : moduleSlug,
+        username : username,
         backgroundColor : '#fff',
         url : 'page.js',
         title : selectedRow._title,

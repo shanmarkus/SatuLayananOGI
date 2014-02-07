@@ -20,19 +20,19 @@ var modulesHTTPClient = Titanium.Network.createHTTPClient({
         //get through each item
         for (var i = 0; i < jsonObject.module.length; i++) {
             var aFeed = jsonObject.module[i];
-
             //create table row
             var row = Titanium.UI.createTableViewRow({
                 _title : aFeed.module_name,
                 _id : aFeed.id_module,
                 moduleSlug : aFeed.module_slug,
-                _username : aFeed.username,
+                username : aFeed.username,
                 hasChild : true,
                 className : 'module-row',
                 filter : aFeed.module_name,
                 height : 'auto',
                 backgroundColor : '#fff'
             });
+
             //title label for row at index i
             var titleLabel = Titanium.UI.createLabel({
                 text : aFeed.module_name,
@@ -269,6 +269,7 @@ moduleTable.addEventListener('click', function(e) {
         _title : selectedRow._title,
         _id : selectedRow._id,
         _moduleSlug : selectedRow.moduleSlug,
+        _username : selectedRow.username,
         backgroundColor : '#fff',
         url : 'detailModule.js',
         title : selectedRow._title,

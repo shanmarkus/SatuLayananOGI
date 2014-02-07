@@ -38,6 +38,8 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 
         if (discusPage == 'undefined' || discusPage == "" || discusPage == null)
             discusPage = '';
+            
+        var pengelola = win.username;
 
         //generating json content to web view
         var webview = Ti.UI.createWebView({
