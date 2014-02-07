@@ -76,18 +76,31 @@ var tab3 = Titanium.UI.createTab({
 	window : win3
 });
 
+var win4 = Titanium.UI.createWindow({
+	width : pWidth,
+	height : pHeight,
+	top : 0,
+	left : 0,
+	//backgroundImage : 'background.png',
+	url : 'pengelolaLayanan.js',
+	title : 'Pengelola Layanan',
+	barImage : 'navbar.png'
+});
+
+var tab4 = Titanium.UI.createTab({
+	icon : 'images/category-tab-icon.png',
+	title : 'Pengelola Layanan',
+	window : win4
+});
 
 
 //
 //  add tabs
 //
 win3.open;
-//tabGroup.backgroundColor="#4bd762";
-// tabGroup.activeTabBackgroundSelectedColor="#4bd762";
-// tabGroup.activeTabBackgroundColor="#4bd762";
-// tabGroup.active
 tabGroup.addTab(tab3); //Categories.js
 tabGroup.addTab(tab2); //Modules.js
+tabGroup.addTab(tab4); //pengelolaLayanan.js
 tabGroup.addTab(tab1); //Tentang.js
 
 
