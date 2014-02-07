@@ -113,7 +113,6 @@ pengelolaTable.addEventListener('click', function(e) {
 			backgroundColor : '#fff',
 			url : 'institusi.js',
 			title : 'Institusi',
-			id : 0
 		});
 		Titanium.UI.currentTab.open(detailWindow);
 	} else if (selectedRowID == 1) {
@@ -121,7 +120,6 @@ pengelolaTable.addEventListener('click', function(e) {
 			backgroundColor : '#fff',
 			url : 'komunitas.js',
 			title : 'Komunitas',
-			id : 0
 		});
 		Titanium.UI.currentTab.open(detailWindow);
 	} else {
@@ -129,7 +127,6 @@ pengelolaTable.addEventListener('click', function(e) {
 			backgroundColor : '#fff',
 			url : 'akademisi.js',
 			title : 'Akademisi',
-			id : 0
 		});
 		Titanium.UI.currentTab.open(detailWindow);
 	}
