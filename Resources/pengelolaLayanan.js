@@ -22,6 +22,7 @@ var pengelolaTable = Titanium.UI.createTableView({
 var institusiRow = Titanium.UI.createTableViewRow({
 	id : 0,
 	height : 50,
+	 hasChild : true,
 	backgroundColor : '#fff'
 });
 
@@ -48,6 +49,7 @@ data.push(institusiRow);
 var komunitasRow = Titanium.UI.createTableViewRow({
 	id : 1,
 	height : 50,
+	 hasChild : true,
 	backgroundColor : '#fff',
 });
 
@@ -74,6 +76,7 @@ data.push(komunitasRow);
 var akademisiRow = Titanium.UI.createTableViewRow({
 	id : 2,
 	height : 50,
+	 hasChild : true,
 	backgroundColor : '#fff'
 });
 
