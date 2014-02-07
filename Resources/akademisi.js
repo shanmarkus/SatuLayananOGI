@@ -6,7 +6,7 @@ var win = Titanium.UI.currentWindow;
 //create empty day
 //declare the ht tp cl ient object
 var isLoad=false;
-var komunitasHTTPClient = Titanium.Network.createHTTPClient({
+var akademisiHTTPClient = Titanium.Network.createHTTPClient({
     onload : function(e) {
 
         //create a json object using the JSON.PARSE function
@@ -52,11 +52,11 @@ var komunitasHTTPClient = Titanium.Network.createHTTPClient({
             data.push(row);
         }
         // set the data to tableview's data
-        komunitasTable.data = data;
+        akademisiTable.data = data;
 
         if (reloading == true) {
             //when done, reset the header to its original style
-            komunitasTable.setContentInsets({
+            akademisiTable.setContentInsets({
                 top : 0
             }, {
                 animated : true
@@ -79,7 +79,7 @@ var komunitasHTTPClient = Titanium.Network.createHTTPClient({
         arrowImage.hide();
         actIndicator.hide();
         statusLabel.text = "";
-        komunitasTable.setContentInsets({
+        akademisiTable.setContentInsets({
             top : 0
         }, {
             animated : true
@@ -165,7 +165,7 @@ tableHeader.add(arrowImage);
 tableHeader.add(statusLabel);
 
 //create a table view
-var komunitasTable = Titanium.UI.createTableView({
+var akademisiTable = Titanium.UI.createTableView({
     height : Ti.Platform.displayCaps.platformHeight - 118,
     width : 320,
     top : 0,
@@ -175,8 +175,8 @@ var komunitasTable = Titanium.UI.createTableView({
 
 });
 
-komunitasTable.headerPullView = tableHeader;
-win.add(komunitasTable);
+akademisiTable.headerPullView = tableHeader;
+win.add(akademisiTable);
 
 //load all categories
 
@@ -204,7 +204,7 @@ win.addEventListener('click', function(e) {
 });
 var offset = 0;
 //table scrolling function
-komunitasTable.addEventListener('scroll', function(e) {
+akademisiTable.addEventListener('scroll', function(e) {
     if (Ti.Platform.osname != 'iphone') {
         Titanium.API.info("Ti.Platform.osname != 'iPhone':" + Ti.Platform.osname);
         return;
@@ -221,7 +221,7 @@ komunitasTable.addEventListener('scroll', function(e) {
         statusLabel.text = "Pull Down to refresh...";
     }
 });
-komunitasTable.addEventListener('dragEnd', function(e) {
+akademisiTable.addEventListener('dragEnd', function(e) {
     if (Ti.Platform.osname != 'iphone') {
         return;
     }
@@ -232,17 +232,17 @@ komunitasTable.addEventListener('dragEnd', function(e) {
         arrowImage.hide();
         actIndicator.show();
         statusLabel.text = "Reloading modules...";
-        komunitasTable.setContentInsets({
+        akademisiTable.setContentInsets({
             top : 65
         }, {
             animated : true
         });
 
         //null out the existing module data
-         if(!isLoad)komunitasTable.data = null;
+         if(!isLoad)akademisiTable.data = null;
         data = [];
 
-        loadKomunitas();
+        loadAkademisi();
     }
 });
 
@@ -251,14 +251,14 @@ komunitasTable.addEventListener('dragEnd', function(e) {
 //
 // }
 
-loadKomunitas();
+loadAkademisi();
 
 //methods for Categories
 
-function loadKomunitas() {
+function loadAkademisi() {
     //open the recipes xml feed
-    var bool = komunitasHTTPClient.open('GET', 'http://satulayanan.net/api/index?tag=get_user_role&id=3');
+    var bool = akademisiHTTPClient.open('GET', 'http://satulayanan.net/api/index?tag=get_user_role&id=4');
     //execute the call to the remote feed
-    komunitasHTTPClient.send();
+    akademisiHTTPClient.send();
 
 }
