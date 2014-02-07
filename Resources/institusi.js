@@ -191,7 +191,7 @@ win.addEventListener('click', function(e) {
         _title : selectedRow._title,
         _id : selectedRow._id,
         backgroundColor : '#fff',
-        url : 'detailInstitusi.js',
+        url : 'detailPengelola.js',
         font : {
             fontSize : 12,
             fontWeight : ' bold'
