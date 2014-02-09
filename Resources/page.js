@@ -5,6 +5,8 @@
 var win = Titanium.UI.currentWindow;
 
 var data = [];
+var id_user = win.id_user;
+
 var DiscusHTTPClient = Titanium.Network.createHTTPClient({
 	onload : function() {
 		discusPage = this.responseText;
@@ -45,7 +47,7 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 		} else {
 			pengelola = pengelola;
 		}
-		
+
 		//create a table view
 		var pengelolaTable = Titanium.UI.createTableView({
 			height : 50,
@@ -62,7 +64,7 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 		});
 
 		var titlePengelolaRow = Titanium.UI.createLabel({
-			text : "Oleh: "+ pengelola,
+			text : "Oleh: " + pengelola,
 			font : {
 				fontSize : 14,
 				fontWeight : ' bold'
@@ -85,10 +87,30 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 			height : 480,
 
 		});
+
+		pengelolaTable.addEventListener('click', function(e) {
+			//get the selected row index
+			var selectedRow = e.rowData;
+			// create detail window
+			var detailWindow = Titanium.UI.createWindow({
+				_title : selectedRow._title,
+				_id : selectedRow._id,
+				_moduleSlug : selectedRow.moduleSlug,
+				_username : selectedRow.username,
+				id_user : selectedRow.id_user,
+				backgroundColor : '#fff',
+				url : 'detailPengelola.js',
+				title : selectedRow._title,
+				id : 0
+			});
+			Titanium.UI.currentTab.open(detailWindow);
+		});
+		
+		
 		if (pengelola == "") {
 			webview.top = 0;
 			win.add(webview);
-		} else{
+		} else {
 			win.add(pengelolaTable);
 			win.add(webview);
 		}
@@ -119,6 +141,8 @@ loadDiscus();
 //win.add(disqusView);
 //this method will fire if there's an error in accessing the //remote data
 ContentHTTPClient.onerror = loadContent();
+
+//click function
 
 // function
 function loadContent() {

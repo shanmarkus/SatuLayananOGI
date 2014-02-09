@@ -8,7 +8,21 @@ var win = Titanium.UI.currentWindow;
 var data = [];
 //isLoad is a status whether the json has been loaded or not
 var isLoad = false;
-//declare the ht tp cl ient object
+var userPage;
+
+var getUserHTTPClient = Titanium.Network.createHTTPClient({
+	onload : function() {
+		userPage = this.responseText;
+	},
+	onerror : function() {
+		//Ti.API.debug(e.error);
+		alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+		//Ti.API.error(this.status + ' - ' + this.statusText);
+	},
+	timeout : 3000
+});
+
+//declare the http client object
 var detailInstitusiHTTPClient = Titanium.Network.createHTTPClient({
 	onload : function(e) {
 
@@ -297,5 +311,14 @@ function loadModules() {
 
 detailInstitusiHTTPClient.send();
 
+}
+
+function loadGetUser() {
+	var id_user = win.id_user;
+	var getUserHTTPClient = "http://satulayanan.net/api/index?tag=get_user&id=";
+	var getUserTemp = getUserHTTPClient.concat(id_user);
+	getUserHTTPClient.open('GET', getUserTemp);
+	//execute the call to the remote feed
+	getUserHTTPClient.send();
 }
 
