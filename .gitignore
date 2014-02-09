@@ -3,5 +3,14 @@ build.log
 tmp
 ._*
 .DS_Store
+tiapp.xml
 
+<<<<<<< HEAD
 tiaap.xml
+=======
+tiapp.xml
+
+tiapp.xml
+
+tiapp.xml
+>>>>>>> parent of 4aaa8b7... adding tiapxml
