@@ -41,57 +41,35 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 
 		var pengelola = win.username;
 		if (pengelola == null) {
-			var pengelola = "";
+			var pengelolaHTML = "";
+
 		} else {
-			pengelola = pengelola;
+			var pengelolaHTML = "<style>.pengelola{font-size:16px;}</style>" + "<div class='pengelola'>" + "This page is manage by: " + "<b>" + win.username + "</b></div>";
 		}
-		
-		//create a table view
-		var pengelolaTable = Titanium.UI.createTableView({
-			height : 50,
-			width : 320,
-			top : 0,
-			left : 0,
-		});
-
-		var pengelolaRow = Titanium.UI.createTableViewRow({
-			id : 0,
-			height : 50,
-			hasChild : true,
-			backgroundColor : '#fff'
-		});
-
-		var titlePengelolaRow = Titanium.UI.createLabel({
-			text : "Oleh: "+ pengelola,
-			font : {
-				fontSize : 14,
-				fontWeight : ' bold'
-			},
-			left : 70,
-			top : 16,
-			height : 20,
-			width : 210,
-			color : '#232'
-		});
-
-		pengelolaRow.add(titlePengelolaRow);
-		data.push(pengelolaRow);
-		pengelolaTable.data = data;
 
 		//generating json content to web view
 		var webview = Ti.UI.createWebView({
-			html : "<head><meta name=\"viewport\" content=\"width=device-width, user-scalable=no\"></head><style>body{font-family:'HelveticaNeue-Light';font-size:15px}" + "img{max-width:300px;} " + ".content{padding:5px}" + "td, th{ width: 4rem;height: 2rem;border: 1px solid #ccc;text-align: center;}" + "th {background: lightblue;border-color: white;}" + "body {padding: 1rem;}</style><div class='content'>" + jsonObject.content[0].content + discusPage + footer + "</div>",
-			top : 50,
+			html : "<head><meta name=\"viewport\" content=\"width=device-width, user-scalable=no\"></head><style>body{font-family:'HelveticaNeue-Light';font-size:15px}" + "img{max-width:300px;} " + ".content{padding:5px}" + "td, th{ width: 4rem;height: 2rem;border: 1px solid #ccc;text-align: center;}" + "th {background: lightblue;border-color: white;}" + "body {padding: 1rem;}</style><div class='content'>" + pengelolaHTML + jsonObject.content[0].content + discusPage + footer + "</div>",
+			top : 5,
 			height : 480,
 
 		});
-		if (pengelola == "") {
-			webview.top = 0;
-			win.add(webview);
-		} else{
-			win.add(pengelolaTable);
-			win.add(webview);
-		}
+
+		//title label for row at index i
+		var titleLabel = Titanium.UI.createLabel({
+			text : jsonObject.content[0].content,
+			font : {
+				fontSize : 14,
+				fontWeight : ' normal'
+			},
+			top : 5,
+			left : 5,
+			right : 5,
+			width : Ti.Platform.displayCaps.platformWidth,
+			height : Ti.Platform.displayCaps.platformHeight,
+			color : '#232'
+		});
+		win.add(webview);
 
 	},
 	onerror : function(e) {
