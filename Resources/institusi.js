@@ -21,7 +21,7 @@ var institusiHTTPClient = Titanium.Network.createHTTPClient({
             //create table row
             var row = Titanium.UI.createTableViewRow({
                 _title : aFeed.username,
-                _id : aFeed.id_user,
+                id_user : aFeed.id_user,
                 hasChild : true,
                 className : 'category-row',
                 filter : aFeed.username,
@@ -189,7 +189,7 @@ win.addEventListener('click', function(e) {
     // create detail window
     var detailWindow = Titanium.UI.createWindow({
         _title : selectedRow._title,
-        _id : selectedRow._id,
+        id_user : selectedRow.id_user,
         backgroundColor : '#fff',
         url : 'detailPengelola.js',
         font : {

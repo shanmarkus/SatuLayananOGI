@@ -24,6 +24,7 @@ var modulesHTTPClient = Titanium.Network.createHTTPClient({
             var row = Titanium.UI.createTableViewRow({
                 _title : aFeed.module_name,
                 _id : aFeed.id_module,
+                id_user : aFeed.id_user,
                 moduleSlug : aFeed.module_slug,
                 username : aFeed.username,
                 hasChild : true,
@@ -270,6 +271,7 @@ moduleTable.addEventListener('click', function(e) {
         _id : selectedRow._id,
         _moduleSlug : selectedRow.moduleSlug,
         _username : selectedRow.username,
+        id_user : selectedRow.id_user,
         backgroundColor : '#fff',
         url : 'detailModule.js',
         title : selectedRow._title,
