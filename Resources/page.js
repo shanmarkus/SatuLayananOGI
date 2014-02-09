@@ -57,7 +57,7 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 		});
 
 		var pengelolaRow = Titanium.UI.createTableViewRow({
-			id : 0,
+			id_user : id_user,
 			height : 50,
 			hasChild : true,
 			backgroundColor : '#fff'

@@ -11,8 +11,29 @@ var isLoad = false;
 var userPage;
 
 var getUserHTTPClient = Titanium.Network.createHTTPClient({
-	onload : function() {
-		userPage = this.responseText;
+	onload : function(e) {
+
+		//create a json object using the JSON.PARSE function
+
+		Ti.App.addEventListener('openURL', function(e) {
+			Ti.Platform.openURL(e.url);
+		});
+		Ti.App.addEventListener('sendEmail', function(e) {
+
+			var emailDialog = Titanium.UI.createEmailDialog();
+			emailDialog.toRecipients = [e.url];
+			emailDialog.open();
+		});
+
+		var jsonObject = JSON.parse(this.responseText);
+
+		//generating json content to web view
+		var webview = Ti.UI.createWebView({
+			html : "<head><meta name=\"viewport\" content=\"width=device-width, user-scalable=no\"></head><style>body{font-family:'HelveticaNeue-Light';font-size:15px}" + "img{max-width:300px;} " + ".content{padding:5px}" + "td, th{ width: 4rem;height: 2rem;border: 1px solid #ccc;text-align: center;}" + "th {background: lightblue;border-color: white;}" + "body {padding: 1rem;}</style><div class='content'>" + jsonObject.user[0].description + "</div>",
+			height : 90,
+			top: 10,
+		});
+			win.add(webview);
 	},
 	onerror : function() {
 		//Ti.API.debug(e.error);
@@ -21,6 +42,8 @@ var getUserHTTPClient = Titanium.Network.createHTTPClient({
 	},
 	timeout : 3000
 });
+
+loadGetUser();
 
 //declare the http client object
 var detailInstitusiHTTPClient = Titanium.Network.createHTTPClient({
@@ -227,6 +250,7 @@ var moduleTable = Titanium.UI.createTableView({
 
 });
 moduleTable.headerPullView = tableHeader;
+moduleTable.top = 100;
 win.add(moduleTable);
 var offset = 0;
 //table scrolling function
@@ -303,20 +327,20 @@ loadModules();
 // function
 function loadModules() {
 	//open the modules xml feed
-	var institusi_id = win._id;
+	var institusi_id = win.id_user;
 	var httpTemp = 'http://satulayanan.net/api/index?tag=get_module_user&id=';
 	detailInstitusiHTTPClient.open('GET', httpTemp.concat(institusi_id));
 
-//execute the call to the remote feed
+	//execute the call to the remote feed
 
-detailInstitusiHTTPClient.send();
+	detailInstitusiHTTPClient.send();
 
 }
 
 function loadGetUser() {
 	var id_user = win.id_user;
-	var getUserHTTPClient = "http://satulayanan.net/api/index?tag=get_user&id=";
-	var getUserTemp = getUserHTTPClient.concat(id_user);
+	var url = "http://satulayanan.net/api/index?tag=get_user&id=";
+	var getUserTemp = url.concat(id_user);
 	getUserHTTPClient.open('GET', getUserTemp);
 	//execute the call to the remote feed
 	getUserHTTPClient.send();
