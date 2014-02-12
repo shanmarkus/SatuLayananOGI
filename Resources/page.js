@@ -33,9 +33,6 @@ var ContentHTTPClient = Titanium.Network.createHTTPClient({
 		});
 
 		var jsonObject = JSON.parse(this.responseText);
-		
-		alert(regex(jsonObject));
-		Ti.API.info(regex(jsonObject));
 
 		var footer = "<style>.footer{font-size:12px;}</style>" + "<div class='footer'><hr>" + "Jika terdapat masukan atau saran terhadap informasi di Modul Layanan ini silahkan kirimkan email kepada pengelola masing-masing Modul Layanan. " + "Apabila pada Modul Layanan tersebut belum ada pengelolanya, maka Modul Layanan tersebut belum ada pengelolanya, maka masukan atau saran dapat di sampaikan melalui " + "network@opengovindonesia.org " + "atau mention lewat akun twitter " + "@OpenGovIndo " + "<div class='lapor'>Jika terdapat permasalahan dalam layanan publik ini, silahkan melaporkan ke <a><img src='http://satulayanan.net/img/lapor.png'></a><hr></div>" + "</div>";
 
