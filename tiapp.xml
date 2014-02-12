@@ -47,4 +47,5 @@
         <target device="tizen">false</target>
     </deployment-targets>
     <sdk-version>3.2.0.GA</sdk-version>
+
 </ti:app>
