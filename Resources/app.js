@@ -31,7 +31,7 @@ var win1 = Titanium.UI.createWindow({
 });
 
 var tab1 = Titanium.UI.createTab({
-	icon : 'images/tentang-tab-icon.png',
+	icon : 'images/info30x30.png',
 	title : 'Tentang',
 	window : win1
 });
@@ -52,7 +52,7 @@ var win2 = Titanium.UI.createWindow({
 });
 
 var tab2 = Titanium.UI.createTab({
-	icon : 'images/module-tab-icon.png',
+	icon : 'images/paper30x30.png',
 	title : 'Modul',
 	window : win2
 });
@@ -71,7 +71,7 @@ var win3 = Titanium.UI.createWindow({
 });
 
 var tab3 = Titanium.UI.createTab({
-	icon : 'images/category-tab-icon.png',
+	icon : 'images/archive30x30.png',
 	title : 'Kategori',
 	window : win3
 });
@@ -88,7 +88,7 @@ var win4 = Titanium.UI.createWindow({
 });
 
 var tab4 = Titanium.UI.createTab({
-	icon : 'images/category-tab-icon.png',
+	icon : 'images/people30x30.png',
 	title : 'Pengelola Layanan',
 	window : win4
 });
