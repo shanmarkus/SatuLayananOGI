@@ -152,7 +152,7 @@ function regex(jsonObject){
         // for(var i=0 ; i<temp.length; i++){
             // alert(temp);
         // }
-var res = str.match(/ain/g);
+//var res = temp.match(/ain/g);
  return compiledContent;
 	
 	
