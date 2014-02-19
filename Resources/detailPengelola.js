@@ -6,227 +6,204 @@ var win = Titanium.UI.currentWindow;
 
 //the data storage empty array
 var data = [];
+var data2 = [];
 //isLoad is a status whether the json has been loaded or not
 var isLoad = false;
 var userPage;
 
 
-var infoTable = Titanium.UI.createTableView({
-    height : 500,
-    width : 320,
-    top : 0,
-    left : 0,
-    search : searchBar,
-    filterAttribute : 'filter'
-
-});
 var getUserHTTPClient = Titanium.Network.createHTTPClient({
-    onload : function(e) {
+	onload : function(e) {
 
-        //create a json object using the JSON.PARSE function
+		//create a json object using the JSON.PARSE function
 
-        Ti.App.addEventListener('openURL', function(e) {
-            Ti.Platform.openURL(e.url);
-        });
-        Ti.App.addEventListener('sendEmail', function(e) {
+		var jsonObject = JSON.parse(this.responseText);
 
-            var emailDialog = Titanium.UI.createEmailDialog();
-            emailDialog.toRecipients = [e.url];
-            emailDialog.open();
-        });
+		var bFeed = jsonObject.user[0];
 
-        var jsonObject = JSON.parse(this.responseText);
-        // var aFeed = jsonObject;
-        // var infoTableRow = Titanium.UI.createTableViewRow({
-//      
-            // hasChild : true,
-            // className : 'module-row',
-            // height : '20',
-            // backgroundColor : '#fff'
-        // });
-        // //title label for row at index i
-        // var titleLabel = Titanium.UI.createLabel({
-            // text : 'Informasi',
-            // font : {
-                // fontSize : 14,
-                // fontWeight : ' bold'
-            // },
-            // left : 70,
-            // top : 5,
-            // height : 20,
-            // width : 210,
-            // color : '#232'
-        // });
-//         
-        // infoTableRow.add(titleLabel);
-        // var data2=[];
-        // data2.push(infoTableRow);
-        // infoTable.data=data2;
-        // win.add(infoTable);
-        //generating json content to web view
-        var webview = Ti.UI.createWebView({
-            html : "<head><meta name=\"viewport\" content=\"width=device-width, user-scalable=no\"></head><style>body{font-family:'HelveticaNeue-Light';font-size:15px}" + "img{max-width:300px;} " + ".content{padding:5px}" + "td, th{ width: 4rem;height: 2rem;border: 1px solid #ccc;text-align: center;}" + "th {background: lightblue;border-color: white;}" + "body {padding: 1rem;}</style><div class='content'>" + jsonObject.user[0].description + "</div>",
-            height : 90,
-            top : 10,
-        });
-        win.add(webview);
-    },
-    onerror : function() {
-        //Ti.API.debug(e.error);
-        alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
-        //Ti.API.error(this.status + ' - ' + this.statusText);
-    },
-    timeout : 3000
+		//create table row
+		var namaPengelolaRow = Titanium.UI.createTableViewRow({
+			_title : bFeed.name,
+			user_id : win.id_user,
+			hasChild : true,
+			className : 'module-row',
+			height : 39,
+			backgroundColor : '#fff'
+		});
+
+		var namaPengelolaTitle = Titanium.UI.createLabel({
+			text : "Informasi",
+			font : {
+				fontSize : 14,
+				fontWeight : ' bold'
+			},
+			left : 70,
+			top : 12,
+			height : 10,
+			width : 210,
+			color : '#232'
+		});
+		namaPengelolaRow.add(namaPengelolaTitle);
+		data2.push(namaPengelolaRow);
+		topTable.data = data2;
+
+	},
+	onerror : function() {
+		//Ti.API.debug(e.error);
+		alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+		//Ti.API.error(this.status + ' - ' + this.statusText);
+	},
+	timeout : 3000
 });
 
 loadGetUser();
 
 //declare the http client object
 var detailInstitusiHTTPClient = Titanium.Network.createHTTPClient({
-    onload : function(e) {
+	onload : function(e) {
 
-        //create a json object using the JSON.PARSE function
+		//create a json object using the JSON.PARSE function
 
-        var jsonObject = JSON.parse(this.responseText);
-        var testing = jsonObject.module.length;
+		var jsonObject = JSON.parse(this.responseText);
+		var testing = jsonObject.module.length;
 
-        //get through each item
-        for (var i = 0; i < jsonObject.module.length; i++) {
-            
-            var aFeed = jsonObject.module[i];
+		//get through each item
+		for (var i = 0; i < jsonObject.module.length; i++) {
 
-            //create table row
-            var row = Titanium.UI.createTableViewRow({
-                _title : aFeed.module_name,
-                _id : aFeed.id_module,
-                moduleSlug : aFeed.module_slug,
-                _username : aFeed.username,
-                hasChild : true,
-                className : 'module-row',
-                filter : aFeed.module_name,
-                height : 'auto',
-                backgroundColor : '#fff'
-            });
-            //title label for row at index i
-            var titleLabel = Titanium.UI.createLabel({
-                text : aFeed.module_name,
-                font : {
-                    fontSize : 14,
-                    fontWeight : ' bold'
-                },
-                left : 70,
-                top : 5,
-                height : 10,
-                width : 210,
-                color : '#232'
-            });
+			var aFeed = jsonObject.module[i];
 
-            row.add(titleLabel);
+			//create table row
+			var row = Titanium.UI.createTableViewRow({
+				_title : aFeed.module_name,
+				_id : aFeed.id_module,
+				moduleSlug : aFeed.module_slug,
+				_username : aFeed.username,
+				hasChild : true,
+				className : 'module-row',
+				filter : aFeed.module_name,
+				height : 'auto',
+				backgroundColor : '#fff'
+			});
+			//title label for row at index i
+			var titleLabel = Titanium.UI.createLabel({
+				text : aFeed.module_name,
+				font : {
+					fontSize : 14,
+					fontWeight : ' bold'
+				},
+				left : 70,
+				top : 5,
+				height : 10,
+				width : 210,
+				color : '#232'
+			});
 
-            //description view for row at index i
+			row.add(titleLabel);
 
-            var descriptionLabel = Titanium.UI.createLabel({
-                //text: afeed.username;
-                font : {
-                    fontSize : 10,
-                    fontWeight : ' normal '
-                },
-                left : 70,
-                top : titleLabel.height,
-                width : 200,
-                color : '#9a9'
-            });
+			//description view for row at index i
 
-            if (aFeed.username == null || aFeed.username == '' || aFeed.username.length == 0) {
+			var descriptionLabel = Titanium.UI.createLabel({
+				//text: afeed.username;
+				font : {
+					fontSize : 10,
+					fontWeight : ' normal '
+				},
+				left : 70,
+				top : titleLabel.height,
+				width : 200,
+				color : '#9a9'
+			});
 
-                row._description = '';
-                descriptionLabel.height = 48;
+			if (aFeed.username == null || aFeed.username == '' || aFeed.username.length == 0) {
 
-            } else {
-                row._description = "Oleh: " + aFeed.username;
-                descriptionLabel.height = 48;
+				row._description = '';
+				descriptionLabel.height = 48;
 
-            }
+			} else {
+				row._description = "Oleh: " + aFeed.username;
+				descriptionLabel.height = 48;
 
-            descriptionLabel.text = row._description;
-            row.add(descriptionLabel);
+			}
 
-            row.height = titleLabel.height + descriptionLabel.height + 15;
-            //add our little icon to the left of the row
-            var imageDir = "http://satulayanan.net/uploads/thumbnail/";
-            var image = aFeed.image;
-            var iconImage = Titanium.UI.createImageView({
-                image : imageDir.concat(image),
-                width : 50,
-                height : 50,
-                left : 10,
-                top : 10
-            });
-            row.add(iconImage);
-            //row.selectedBackgroundColor="#4bd762";
+			descriptionLabel.text = row._description;
+			row.add(descriptionLabel);
 
-            //add the row to data array
-            data.push(row);
-        }
-        // set the data to tableview's data
-        moduleTable.data = data;
+			row.height = titleLabel.height + descriptionLabel.height + 15;
+			//add our little icon to the left of the row
+			var imageDir = "http://satulayanan.net/uploads/thumbnail/";
+			var image = aFeed.image;
+			var iconImage = Titanium.UI.createImageView({
+				image : imageDir.concat(image),
+				width : 50,
+				height : 50,
+				left : 10,
+				top : 10
+			});
+			row.add(iconImage);
+			//row.selectedBackgroundColor="#4bd762";
 
-        if (reloading == true) {
-            //when done, reset the header to its original style
-            moduleTable.setContentInsets({
-                top : 0
-            }, {
-                animated : true
-            });
-            reloading = false;
-            statusLabel.text = "Pull to refresh...";
-            actIndicator.hide();
-            arrowImage.backgroundImage = 'img/refreshArrow.png';
-            arrowImage.show();
-        }
-        isLoad = true;
-    },
-    onerror : function(e) {
-        // log the error to our Ti tanium Studio console
-        reloading = false;
-        pulling = false;
-        arrowImage.hide();
-        actIndicator.hide();
-        statusLabel.text = "";
-        moduleTable.setContentInsets({
-            top : 0
-        }, {
-            animated : true
-        });
-        Ti.API.debug(e.error);
-        alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
-        if (!isLoad)
-            isLoad = false;
-        //Ti.API.error(this.status + ' - ' + this.statusText);
-    },
-    timeout : 3000
+			//add the row to data array
+			data.push(row);
+		}
+		// set the data to tableview's data
+		moduleTable.data = data;
+
+		if (reloading == true) {
+			//when done, reset the header to its original style
+			moduleTable.setContentInsets({
+				top : 0
+			}, {
+				animated : true
+			});
+			reloading = false;
+			statusLabel.text = "Pull to refresh...";
+			actIndicator.hide();
+			arrowImage.backgroundImage = 'img/refreshArrow.png';
+			arrowImage.show();
+		}
+		isLoad = true;
+	},
+	onerror : function(e) {
+		// log the error to our Ti tanium Studio console
+		reloading = false;
+		pulling = false;
+		arrowImage.hide();
+		actIndicator.hide();
+		statusLabel.text = "";
+		moduleTable.setContentInsets({
+			top : 0
+		}, {
+			animated : true
+		});
+		Ti.API.debug(e.error);
+		alert("Failed to retrieve data. \n Please make sure you're connected to internet.");
+		if (!isLoad)
+			isLoad = false;
+		//Ti.API.error(this.status + ' - ' + this.statusText);
+	},
+	timeout : 3000
 });
 
 //define search bar which will attach to  table view
 var searchBar = Titanium.UI.createSearchBar({
-    showCancel : true,
-    height : 43,
-    top : 0
+	showCancel : true,
+	height : 43,
+	top : 0
 });
 
 //print out the searchbar value whenever it changes
 searchBar.addEventListener('change', function(e) {
 
-    Ti.API.info('user searching for: ' + e.value);
+	Ti.API.info('user searching for: ' + e.value);
 });
 //when the return key is hit, make searchBar get blur
 searchBar.addEventListener('return', function(e) {
-    searchBar.blur();
+	searchBar.blur();
 });
 
 //when the cancel but ton is tapped,make searchBar get blur too
 searchBar.addEventListener('cancel', function(e) {
-    searchBar.blur();
+	searchBar.blur();
 });
 //end of search bar
 
@@ -235,42 +212,42 @@ var pulling = false;
 var reloading = false;
 
 var tableHeader = Titanium.UI.createView({
-    backgroundImage : 'img/header.png',
-    width : Ti.Platform.displayCaps.platformWidth,
-    height : Ti.Platform.displayCaps.platformHeight
+	backgroundImage : 'img/header.png',
+	width : Ti.Platform.displayCaps.platformWidth,
+	height : Ti.Platform.displayCaps.platformHeight
 });
 
 var arrowImage = Titanium.UI.createImageView({
-    backgroundImage : "img/refreshArrow.png",
-    width : 22,
-    height : 54,
-    bottom : 20,
-    left : 20
+	backgroundImage : "img/refreshArrow.png",
+	width : 22,
+	height : 54,
+	bottom : 20,
+	left : 20
 });
 
 var statusLabel = Ti.UI.createLabel({
-    text : "Pull to refresh...",
-    left : 85,
-    width : 200,
-    bottom : 28,
-    height : "auto",
-    color : "#FFF",
-    textAlign : "center",
-    font : {
-        fontSize : 14,
-        fontWeight : "bold"
-    },
-    shadowColor : "#89a",
-    shadowOffset : {
-        x : 0,
-        y : 1
-    }
+	text : "Pull to refresh...",
+	left : 85,
+	width : 200,
+	bottom : 28,
+	height : "auto",
+	color : "#FFF",
+	textAlign : "center",
+	font : {
+		fontSize : 14,
+		fontWeight : "bold"
+	},
+	shadowColor : "#89a",
+	shadowOffset : {
+		x : 0,
+		y : 1
+	}
 });
 var actIndicator = Titanium.UI.createActivityIndicator({
-    left : 20,
-    bottom : 20,
-    width : 40,
-    height : 40
+	left : 20,
+	bottom : 20,
+	width : 40,
+	height : 40
 });
 tableHeader.add(actIndicator);
 tableHeader.add(arrowImage);
@@ -278,81 +255,90 @@ tableHeader.add(statusLabel);
 
 //create a table view
 var moduleTable = Titanium.UI.createTableView({
-    height : 500,
-    width : 320,
-    top : 0,
-    left : 0,
-    search : searchBar,
-    filterAttribute : 'filter'
+	height : 500,
+	width : 320,
+	top : 0,
+	left : 0,
+	search : searchBar,
+	filterAttribute : 'filter'
 
 });
-moduleTable.headerPullView = tableHeader;
-moduleTable.top = 100;
 
+var topTable = Titanium.UI.createTableView({
+	height : 50,
+	width : 320,
+	top : 0,
+	left : 0,
+});
+moduleTable.headerPullView = tableHeader;
+moduleTable.top = 38;
+
+win.add(topTable);
 win.add(moduleTable);
+
 var offset = 0;
 //table scrolling function
 moduleTable.addEventListener('scroll', function(e) {
-    if (Ti.Platform.osname != 'iphone') {
-        Titanium.API.info("Ti.Platform.osname != 'iPhone':" + Ti.Platform.osname);
-        return;
-    }
+	if (Ti.Platform.osname != 'iphone') {
+		Titanium.API.info("Ti.Platform.osname != 'iPhone':" + Ti.Platform.osname);
+		return;
+	}
 
-    offset = e.contentOffset.y;
-    if (offset < -65.0 && !pulling) {
-        pulling = true;
-        arrowImage.backgroundImage = 'img/refreshArrow_up.png';
-        statusLabel.text = "Release to refresh...";
-    } else if (pulling && offset > -65.0 && offset < 0) {
-        pulling = false;
-        arrowImage.backgroundImage = 'img/refreshArrow.png';
-        statusLabel.text = "Pull Down to refresh...";
-    }
+	offset = e.contentOffset.y;
+	if (offset < -65.0 && !pulling) {
+		pulling = true;
+		arrowImage.backgroundImage = 'img/refreshArrow_up.png';
+		statusLabel.text = "Release to refresh...";
+	} else if (pulling && offset > -65.0 && offset < 0) {
+		pulling = false;
+		arrowImage.backgroundImage = 'img/refreshArrow.png';
+		statusLabel.text = "Pull Down to refresh...";
+	}
 });
 
 moduleTable.addEventListener('dragEnd', function(e) {
-    if (Ti.Platform.osname != 'iphone') {
-        return;
-    }
-    // offset = e.contentOffset.y;
-    if (pulling && !reloading && offset <= -65.0) {
-        reloading = true;
-        pulling = false;
-        arrowImage.hide();
-        actIndicator.show();
-        statusLabel.text = "Reloading modules...";
-        moduleTable.setContentInsets({
-            top : 65
-        }, {
-            animated : true
-        });
+	if (Ti.Platform.osname != 'iphone') {
+		return;
+	}
+	// offset = e.contentOffset.y;
+	if (pulling && !reloading && offset <= -65.0) {
+		reloading = true;
+		pulling = false;
+		arrowImage.hide();
+		actIndicator.show();
+		statusLabel.text = "Reloading modules...";
+		moduleTable.setContentInsets({
+			top : 65
+		}, {
+			animated : true
+		});
 
-        //null out the existing module data
-        if (!isLoad)
-            moduleTable.data = null;
-        data = [];
+		//null out the existing module data
+		if (!isLoad)
+			moduleTable.data = null;
+		data = [];
 
-        loadModules();
+		loadModules();
 
-    }
+	}
 });
 //tablerow selected function: create new window
 moduleTable.addEventListener('click', function(e) {
 
-    //get the selected row index
-    var selectedRow = e.rowData;
+	//get the selected row index
+	var selectedRow = e.rowData;
 
-    // create detail window
-    var detailWindow = Titanium.UI.createWindow({
-        _title : selectedRow._title,
-        _id : selectedRow._id,
-        _moduleSlug : selectedRow.moduleSlug,
-        backgroundColor : '#fff',
-        url : 'detailModule.js',
-        title : selectedRow._title,
-        id : 0
-    });
-    Titanium.UI.currentTab.open(detailWindow);
+	// create detail window
+	var detailWindow = Titanium.UI.createWindow({
+		_title : selectedRow._title,
+		_id : selectedRow._id,
+		_moduleSlug : selectedRow.moduleSlug,
+		backgroundColor : '#fff',
+		url : 'detailModule.js',
+		title : selectedRow._title,
+		id : 0
+	});
+	Titanium.UI.currentTab.open(detailWindow);
 });
 // this method will process the remote data
 
@@ -364,23 +350,23 @@ loadModules();
 
 // function
 function loadModules() {
-    //open the modules xml feed
-    var institusi_id = win.id_user;
-    var httpTemp = 'http://satulayanan.net/api/index?tag=get_module_user&id=';
-    detailInstitusiHTTPClient.open('GET', httpTemp.concat(institusi_id));
+	//open the modules xml feed
+	var institusi_id = win.id_user;
+	var httpTemp = 'http://satulayanan.net/api/index?tag=get_module_user&id=';
+	detailInstitusiHTTPClient.open('GET', httpTemp.concat(institusi_id));
 
-    //execute the call to the remote feed
+	//execute the call to the remote feed
 
-    detailInstitusiHTTPClient.send();
+	detailInstitusiHTTPClient.send();
 
 }
 
 function loadGetUser() {
-    var id_user = win.id_user;
-    var url = "http://satulayanan.net/api/index?tag=get_user&id=";
-    var getUserTemp = url.concat(id_user);
-    getUserHTTPClient.open('GET', getUserTemp);
-    //execute the call to the remote feed
-    getUserHTTPClient.send();
+	var id_user = win.id_user;
+	var url = "http://satulayanan.net/api/index?tag=get_user&id=";
+	var getUserTemp = url.concat(id_user);
+	getUserHTTPClient.open('GET', getUserTemp);
+	//execute the call to the remote feed
+	getUserHTTPClient.send();
 }
 
