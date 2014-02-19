@@ -52,7 +52,7 @@ var win2 = Titanium.UI.createWindow({
 });
 
 var tab2 = Titanium.UI.createTab({
-	icon : 'images/paper30x30.png',
+	icon : 'images/module30x30.png',
 	title : 'Modul',
 	window : win2
 });
@@ -71,7 +71,7 @@ var win3 = Titanium.UI.createWindow({
 });
 
 var tab3 = Titanium.UI.createTab({
-	icon : 'images/archive30x30.png',
+	icon : 'images/categories30x30.png',
 	title : 'Kategori',
 	window : win3
 });

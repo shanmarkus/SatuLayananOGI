@@ -21,9 +21,16 @@ var detailModulesHTTPClient = Titanium.Network.createHTTPClient({
             alert("Failed to retrieve data.\n Please try again and make sure you have internet connection.");
         }
         //get through each item
+        if(jsonObject.page == null||jsonObject.page=='undefined' || jsonObject ==''){
+            alert("Failed to retrieve data.\n Please try again and make sure you have internet connection.");   
+        }
+        else
+        {
+            
+        
         for (var i = 0; i < jsonObject.page.length; i++) {
             var aFeed = jsonObject.page[i];
-
+            
             //create table row
             var row = Titanium.UI.createTableViewRow({
                 _title : aFeed.page_name,
@@ -71,6 +78,7 @@ var detailModulesHTTPClient = Titanium.Network.createHTTPClient({
 
             //add the row to data array
             data.push(row);
+        }
         }
         // set the data to tableview's data
         detailModuleTable.data = data;
