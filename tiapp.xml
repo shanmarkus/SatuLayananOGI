@@ -37,7 +37,10 @@
         </splash>
         <theme>default</theme>
     </mobileweb>
-    <modules/>
+    <modules>
+        <module platform="android">facebook</module>
+        <module platform="iphone">facebook</module>
+    </modules>
     <deployment-targets>
         <target device="android">false</target>
         <target device="blackberry">false</target>
@@ -47,5 +50,4 @@
         <target device="tizen">false</target>
     </deployment-targets>
     <sdk-version>3.2.0.GA</sdk-version>
-
 </ti:app>
