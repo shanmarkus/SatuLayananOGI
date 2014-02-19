@@ -148,7 +148,10 @@ function regex(jsonObject){
         compiledContent = compiledContent.replace("<a\\s+[^>]*href=(['\"])(.*?)\\1[^>]*>+[^>]*>+/\">+<a\\s+href", "<a href");
         compiledContent = compiledContent.replace("<a\\s+[^>]*href=(['\"])(.*?)\\1[^>]*>+[^>]*>+\">+<a\\s+href", "<a href");
      
-        var str = "<a\\s+class=\"button-link\"\\s+target=\"_blank\"\\s+href=(['\"])(.*?)\\1[^>]*>+(.*?)\\1*[^>]*>"; 
+        var temp = compiledContent.match("<a\\s+class=\"button-link\"\\s+target=\"_blank\"\\s+href=(['\"])(.*?)\\1[^>]*>+(.*?)\\1*[^>]*>"); 
+        // for(var i=0 ; i<temp.length; i++){
+            // alert(temp);
+        // }
 var res = str.match(/ain/g);
  return compiledContent;
 	
