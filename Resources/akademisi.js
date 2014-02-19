@@ -22,6 +22,7 @@ var akademisiHTTPClient = Titanium.Network.createHTTPClient({
             var row = Titanium.UI.createTableViewRow({
                 _title : aFeed.username,
                 _id : aFeed.id_user,
+                id_user : aFeed.id_user,
                 hasChild : true,
                 className : 'category-row',
                 filter : aFeed.username,
@@ -189,6 +190,7 @@ win.addEventListener('click', function(e) {
     // create detail window
     var detailWindow = Titanium.UI.createWindow({
         _title : selectedRow._title,
+        id_user : selectedRow.id_user,
         _id : selectedRow._id,
         backgroundColor : '#fff',
         url : 'detailPengelola.js',
