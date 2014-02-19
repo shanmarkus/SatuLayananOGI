@@ -340,6 +340,23 @@ moduleTable.addEventListener('click', function(e) {
 	});
 	Titanium.UI.currentTab.open(detailWindow);
 });
+
+topTable.addEventListener('click', function(e) {
+
+	//get the selected row index
+	var selectedRow = e.rowData;
+
+	// create detail window
+	var detailWindow = Titanium.UI.createWindow({
+		_title : selectedRow.name,
+		user_id : win.id_user,
+		backgroundColor : '#fff',
+		url : 'detailInformasi.js',
+		title : selectedRow.name,
+		id : 0
+	});
+	Titanium.UI.currentTab.open(detailWindow);
+});
 // this method will process the remote data
 
 //detailInstitusiHTTPClient.onload =
