@@ -10,7 +10,7 @@ var data2 = [];
 //isLoad is a status whether the json has been loaded or not
 var isLoad = false;
 var userPage;
-var userData;
+var userData='';
 
 var getUserHTTPClient = Titanium.Network.createHTTPClient({
 	onload : function(e) {
@@ -42,7 +42,8 @@ var detailInstitusiHTTPClient = Titanium.Network.createHTTPClient({
 		//get through each item
 		for (var i = 0; i < jsonObject.module.length; i++) {
 			if (i == 0) {
-
+			   
+                if(userData.name!='undefined' || userData.name!='null'||userData.name!=''){
 				var row = Titanium.UI.createTableViewRow({
 					_title : userData.name,
 					user_id : win.id_user,
@@ -85,6 +86,7 @@ var detailInstitusiHTTPClient = Titanium.Network.createHTTPClient({
 
 				//add the row to data array
 				data.push(row);
+				}
 			}
 			var aFeed = jsonObject.module[i];
 
