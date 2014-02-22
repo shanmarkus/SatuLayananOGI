@@ -50,6 +50,7 @@ var detailInstitusiHTTPClient = Titanium.Network.createHTTPClient({
 					hasChild : true,
 					className : 'module-row',
 					height : 39,
+					filter : 'Tentang ' + userData.name,
 					backgroundColor : '#fff',
 					id : 0,
 				});

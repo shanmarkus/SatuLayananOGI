@@ -101,6 +101,7 @@ var searchBar = Titanium.UI.createSearchBar({
     top : 0
 });
 
+
 //print out the searchbar value whenever it changes
 searchBar.addEventListener('change', function(e) {
 
