@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+iosLaunchConfigurationAttributes/ATTR_MINIFY=true
+iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=SatuLayananOGI
+iosLaunchConfigurationAttributes/appid=com.ogi.SatuLayanan
+iosLaunchConfigurationAttributes/certificate=Unit Kerja Presiden bidang Pengawasan dan Pengendalian Pembangunan (R5XH444SUF)
+iosLaunchConfigurationAttributes/keychain=
+iosLaunchConfigurationAttributes/sdk_version=7.0.3
+iosLaunchConfigurationAttributes/uuid=B2211874-7FDD-4044-9C82-A49AE1F7F4BC
+provisioning_profiles/distribution/B2211874-7FDD-4044-9C82-A49AE1F7F4BC/appid=com.ogi.*
+provisioning_profiles/distribution/B2211874-7FDD-4044-9C82-A49AE1F7F4BC/name=SatuLayanan
+provisioning_profiles/distribution/B2211874-7FDD-4044-9C82-A49AE1F7F4BC/uuid=B2211874-7FDD-4044-9C82-A49AE1F7F4BC
